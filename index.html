@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>دورة إثرائي</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f7fa;
+      text-align: center;
+    }
+
+    header {
+      padding: 20px;
+      background-color: #2c3e50;
+      color: white;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .video-container {
+      margin: 20px auto 10px;
+      max-width: 450px;
+      position: relative;
+    }
+
+    iframe {
+      width: 100%;
+      height: 225px;
+      border-radius: 14px;
+      border: none;
+      box-shadow: 0 0 15px #ccc;
+    }
+
+    #nextLessonBtn {
+      margin: 15px auto 30px;
+      background-color: #0984e3;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(9, 132, 227, 0.4);
+      transition: background-color 0.3s;
+      max-width: 450px;
+      width: 100%;
+    }
+
+    #nextLessonBtn:hover {
+      background-color: #74b9ff;
+    }
+
+    #bookmarkToggleBtn {
+      background-color: #2d3436;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 8px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      margin-bottom: 10px;
+    }
+
+    #bookmarkList {
+      max-width: 450px;
+      margin: 10px auto 20px;
+      text-align: right;
+      background: #dfe6e9;
+      border-radius: 10px;
+      padding: 10px 15px;
+      display: none;
+      font-size: 14px;
+      min-height: 30px;
+    }
+
+    #bookmarkList button {
+      background-color: #0984e3;
+      border: none;
+      color: white;
+      border-radius: 8px;
+      padding: 6px 12px;
+      margin: 4px 4px 4px 0;
+      cursor: pointer;
+      font-size: 13px;
+      transition: background-color 0.3s;
+    }
+    #bookmarkList button:hover {
+      background-color: #74b9ff;
+    }
+
+    .content {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .sidebar {
+      width: 600px;
+      text-align: right;
+    }
+
+    .unit {
+      background-color: #e0e0e0;
+      border-radius: 14px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .unit-title {
+      font-weight: bold;
+      font-size: 18px;
+      padding: 14px 20px;
+      background-color: #dfe6e9;
+      color: #2d3436;
+      border-radius: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .arrow {
+      font-size: 20px;
+    }
+
+    .lessons {
+      display: none;
+      padding: 10px 20px;
+    }
+
+    .lesson {
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      background-color: #f8f9fa;
+      border-radius: 10px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      font-size: 15px;
+      color: #636e72;
+      transition: background 0.3s;
+      position: relative;
+      cursor: default;
+    }
+
+    .lesson.locked {
+      color: #999;
+      cursor: default;
+    }
+
+    .lesson.unlocked {
+      background-color: #dff9fb;
+      cursor: pointer;
+      color: #2d3436;
+    }
+
+    .lesson.active {
+      font-weight: bold;
+      background-color: #c7ecee !important;
+    }
+
+    .doneMark {
+      color: green;
+      margin-left: 8px;
+      user-select: none;
+      font-weight: bold;
+      min-width: 20px;
+      text-align: center;
+    }
+
+    .bookmarkIcon {
+      width: 18px;
+      height: 18px;
+      margin-right: 10px;
+      cursor: pointer;
+      user-select: none;
+      fill: #bbb;
+      transition: fill 0.3s;
+      flex-shrink: 0;
+    }
+
+    .bookmarkIcon.active {
+      fill: gray;
+    }
+
+    .lockIcon {
+      width: 18px;
+      height: 18px;
+      margin-left: 10px;
+      fill: #999;
+      flex-shrink: 0;
+    }
+
+    .checkMark {
+      color: green;
+      font-weight: bold;
+      margin-left: 10px;
+      min-width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+  </style>
+</head>
+<body>
+
+<header>دورة إثرائي: أساسيات التسويق</header>
+
+<div class="video-container">
+  <button id="bookmarkToggleBtn">الإشارات المرجعية</button>
+  <div id="bookmarkList"></div>
+
+  <iframe
+    id="videoFrame"
+    src="https://www.youtube.com/embed/ScMzIvxBSi4?enablejsapi=1"
+    allow="autoplay; encrypted-media"
+    allowfullscreen
+  ></iframe>
+</div>
+
+<button id="nextLessonBtn">فتح كل الدروس</button>
+
+<div class="content">
+  <div class="sidebar" id="lessonList"></div>
+</div>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+  // بيانات الوحدات والدروس
+  const lessonsData = [...Array(4).keys()].map(i => ({
+    title: `الوحدة ${i + 1}: عنوان الوحدة ${i + 1}`,
+    lessons: [...Array(12).keys()]
+      .map(j => `الدرس ${j + 1} من الوحدة ${i + 1}`)
+      .concat(`تقييم الوحدة ${i + 1}`)
+  }));
+
+  const videoLinks = [
+    "https://www.youtube.com/embed/ScMzIvxBSi4?enablejsapi=1",
+    "https://www.youtube.com/embed/aqz-KE-bpKQ?enablejsapi=1",
+    "https://www.youtube.com/embed/2Vv-BfVoq4g?enablejsapi=1",
+    "https://www.youtube.com/embed/60ItHLz5WEA?enablejsapi=1",
+    "https://www.youtube.com/embed/fRh_vgS2dFE?enablejsapi=1",
+    "https://www.youtube.com/embed/kJQP7kiw5Fk?enablejsapi=1",
+    "https://www.youtube.com/embed/JGwWNGJdvx8?enablejsapi=1",
+    "https://www.youtube.com/embed/3JZ_D3ELwOQ?enablejsapi=1",
+    "https://www.youtube.com/embed/YQHsXMglC9A?enablejsapi=1",
+    "https://www.youtube.com/embed/09R8_2nJtjg?enablejsapi=1"
+  ];
+  while (videoLinks.length < 52) {
+    videoLinks.push(videoLinks[videoLinks.length % 10]);
+  }
+
+  let flatLessons = [];
+  let currentIndex = 0;
+  const lessonList = document.getElementById("lessonList");
+  const nextLessonBtn = document.getElementById("nextLessonBtn");
+  const bookmarkToggleBtn = document.getElementById("bookmarkToggleBtn");
+  const bookmarkList = document.getElementById("bookmarkList");
+  const videoFrame = document.getElementById("videoFrame");
+
+  let bookmarks = [];
+
+  // إنشاء أيقونة القفل
+  function createLockIcon() {
+    const svgNS = "http://www.w3.org/2000/svg";
+    const icon = document.createElementNS(svgNS, "svg");
+    icon.setAttribute("viewBox", "0 0 24 24");
+    icon.setAttribute("class", "lockIcon");
+    icon.innerHTML = `<path d="M12 17a2 2 0 0 0 2-2v-2a2 2 0 1 0-4 0v2a2 2 0 0 0 2 2zm6-6h-1V7a5 5 0 0 0-10 0v4H6a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2z"/>`;
+    return icon;
+  }
+
+  // إنشاء أيقونة الإشارة المرجعية
+  function createBookmarkIcon() {
+    const svgNS = "http://www.w3.org/2000/svg";
+    const icon = document.createElementNS(svgNS, "svg");
+    icon.setAttribute("viewBox", "0 0 24 24");
+    icon.setAttribute("class", "bookmarkIcon");
+    icon.innerHTML = `<path d="M6 4v16l6-6 6 6V4z"/>`;
+    return icon;
+  }
+
+  // إنشاء الدروس بالاقفال والإشارات
+  function createLessons() {
+    lessonList.innerHTML = "";
+    flatLessons = [];
+    lessonsData.forEach((unit, uIndex) => {
+      const unitDiv = document.createElement("div");
+      unitDiv.className = "unit";
+
+      // عنوان الوحدة مع سهم الطي
+      const titleDiv = document.createElement("div");
+      titleDiv.className = "unit-title";
+      titleDiv.textContent = unit.title;
+
+      const arrowSpan = document.createElement("span");
+      arrowSpan.className = "arrow";
+      arrowSpan.textContent = "▼";
+
+      titleDiv.appendChild(arrowSpan);
+      unitDiv.appendChild(titleDiv);
+
+      const lessonsDiv = document.createElement("div");
+      lessonsDiv.className = "lessons";
+
+      // طي وفتح الوحدة
+      titleDiv.onclick = () => {
+        if (lessonsDiv.style.display === "block") {
+          lessonsDiv.style.display = "none";
+          arrowSpan.textContent = "▼";
+        } else {
+          lessonsDiv.style.display = "block";
+          arrowSpan.textContent = "▲";
+        }
+      };
+
+      unit.lessons.forEach((lessonName, lIndex) => {
+        const lessonDiv = document.createElement("div");
+        lessonDiv.className = "lesson locked";
+
+        lessonDiv.dataset.index = flatLessons.length;
+        lessonDiv.textContent = lessonName;
+
+        // أيقونة القفل أو علامة الصح حسب الحالة
+        const lockIcon = createLockIcon();
+        lessonDiv.insertBefore(lockIcon, lessonDiv.firstChild);
+
+        // أيقونة الإشارة المرجعية
+        const bookmarkIcon = createBookmarkIcon();
+        bookmarkIcon.title = "وضع/حذف إشارة مرجعية";
+        lessonDiv.insertBefore(bookmarkIcon, lessonDiv.firstChild);
+
+        // عند الضغط على الإشارة المرجعية toggle
+        bookmarkIcon.onclick = (e) => {
+          e.stopPropagation();
+          const idx = +lessonDiv.dataset.index;
+          if (bookmarks.includes(idx)) {
+            bookmarks = bookmarks.filter(x => x !== idx);
+            bookmarkIcon.classList.remove("active");
+          } else {
+            bookmarks.push(idx);
+            bookmarkIcon.classList.add("active");
+          }
+          renderBookmarkList();
+          saveBookmarks();
+        };
+
+        lessonsDiv.appendChild(lessonDiv);
+        flatLessons.push({ unitIndex: uIndex, lessonIndex: lIndex, lessonDiv });
+      });
+
+      unitDiv.appendChild(lessonsDiv);
+      lessonList.appendChild(unitDiv);
+    });
+  }
+
+  // حفظ واسترجاع الإشارات المرجعية من localStorage
+  function saveBookmarks() {
+    localStorage.setItem("lessonBookmarks", JSON.stringify(bookmarks));
+  }
+
+  function loadBookmarks() {
+    const saved = localStorage.getItem("lessonBookmarks");
+    if (saved) {
+      bookmarks = JSON.parse(saved);
+    } else {
+      bookmarks = [];
+    }
+  }
+
+  // عرض قائمة الإشارات المرجعية كأزرار
+  function renderBookmarkList() {
+    bookmarkList.innerHTML = "";
+    if (bookmarks.length === 0) {
+      bookmarkList.textContent = "لا توجد إشارات مرجعية بعد.";
+      return;
+    }
+    bookmarks.forEach(idx => {
+      const btn = document.createElement("button");
+      const lesson = flatLessons[idx];
+      btn.textContent = `${lessonsData[lesson.unitIndex].lessons[lesson.lessonIndex]}`;
+      btn.onclick = () => {
+        loadLesson(idx);
+      };
+      bookmarkList.appendChild(btn);
+    });
+  }
+
+  // تفعيل عرض/اخفاء قائمة الإشارات
+  bookmarkToggleBtn.onclick = () => {
+    if (bookmarkList.style.display === "block") {
+      bookmarkList.style.display = "none";
+    } else {
+      bookmarkList.style.display = "block";
+    }
+  };
+
+  // تحميل درس معين
+  function loadLesson(idx) {
+    // إذا الدرس مقفل (ما بعد currentIndex + 1) ممنوع
+    if (idx > currentIndex) return;
+    setActiveLesson(idx);
+  }
+
+  // تفعيل درس معين وتحديث الفيديو
+  function setActiveLesson(idx) {
+    flatLessons.forEach(l => {
+      l.lessonDiv.classList.remove("active");
+    });
+    flatLessons[idx].lessonDiv.classList.add("active");
+    // تفعيل القفل والصح
+    flatLessons.forEach((l, i) => {
+      const lockIcon = l.lessonDiv.querySelector(".lockIcon");
+      const checkMark = l.lessonDiv.querySelector(".checkMark");
+      if (!checkMark) {
+        const span = document.createElement("span");
+        span.className = "checkMark";
+        l.lessonDiv.appendChild(span);
+      }
+      if (i <= currentIndex) {
+        // إلغاء القفل وإظهار صح فقط عند i < currentIndex
+        if (i < currentIndex) {
+          l.lessonDiv.querySelector(".lockIcon").style.display = "none";
+          l.lessonDiv.querySelector(".checkMark").textContent = "✔️";
+        } else if (i === currentIndex) {
+          l.lessonDiv.querySelector(".lockIcon").style.display = "none";
+          l.lessonDiv.querySelector(".checkMark").textContent = "";
+        }
+        l.lessonDiv.classList.remove("locked");
+        l.lessonDiv.classList.add("unlocked");
+      } else {
+        l.lessonDiv.querySelector(".lockIcon").style.display = "inline-block";
+        l.lessonDiv.querySelector(".checkMark").textContent = "";
+        l.lessonDiv.classList.remove("unlocked");
+        l.lessonDiv.classList.add("locked");
+      }
+    });
+    // تغيير رابط الفيديو
+    const videoURL = videoLinks[idx] || videoLinks[0];
+    player.loadVideoByUrl(videoURL);
+  }
+
+  // عند الضغط زر فتح الدروس كلها - فقط يفعل الدرس الأول
+  nextLessonBtn.onclick = () => {
+    currentIndex = 0;
+    setActiveLesson(0);
+  };
+
+  // YouTube Player API
+  let player;
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('videoFrame', {
+      events: {
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
+
+  // عند انتهاء الفيديو - نفعّل الدرس التالي
+  function onPlayerStateChange(event) {
+    if (event.data === YT.PlayerState.ENDED) {
+      if (currentIndex < flatLessons.length - 1) {
+        // وضع علامة صح على الدرس الحالي
+        const currentLessonDiv = flatLessons[currentIndex].lessonDiv;
+        const checkMark = currentLessonDiv.querySelector(".checkMark");
+        if (checkMark) checkMark.textContent = "✔️";
+        currentLessonDiv.querySelector(".lockIcon").style.display = "none";
+
+        // تفعيل الدرس التالي (فتح قفله)
+        currentIndex++;
+        const nextLessonDiv = flatLessons[currentIndex].lessonDiv;
+        nextLessonDiv.classList.remove("locked");
+        nextLessonDiv.classList.add("unlocked");
+        nextLessonDiv.querySelector(".lockIcon").style.display = "none";
+
+        setActiveLesson(currentIndex);
+      }
+    }
+  }
+
+  // تحميل الإشارات المرجعية
+  loadBookmarks();
+
+  // إنشاء الدروس وتهيئة الواجهة
+  createLessons();
+
+  // تطبيق الإشارات المرجعية
+  bookmarks.forEach(idx => {
+    if (flatLessons[idx]) {
+      flatLessons[idx].lessonDiv.querySelector(".bookmarkIcon").classList.add("active");
+    }
+  });
+
+  // عرض الإشارات
+  renderBookmarkList();
+
+  // تفعيل الدرس الأول (مفتوح فقط)
+  currentIndex = 0;
+  setActiveLesson(0);
+
+</script>
+
+</body>
+</html>
