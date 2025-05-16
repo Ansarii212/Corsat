@@ -68,7 +68,7 @@
     #bookmarkList {
       max-width: 450px;
       margin: 10px auto 20px;
-      text-align: right;
+      text-align: left;
       background: #dfe6e9;
       border-radius: 10px;
       padding: 10px 15px;
@@ -165,17 +165,17 @@
 
     .doneMark {
       color: green;
-      margin-left: 8px;
+      margin-right: 12px;
       user-select: none;
       font-weight: bold;
       min-width: 20px;
-      text-align: center;
+      text-align: right;
     }
 
     .bookmarkIcon {
       width: 18px;
       height: 18px;
-      margin-right: 10px;
+      margin-left: 30px;
       cursor: pointer;
       user-select: none;
       fill: #bbb;
@@ -198,9 +198,9 @@
     .checkMark {
       color: green;
       font-weight: bold;
-      margin-left: 10px;
+      margin-left: 30px;
       min-width: 20px;
-      text-align: center;
+      text-align: left;
       flex-shrink: 0;
     }
 
@@ -299,7 +299,7 @@
 
       const arrowSpan = document.createElement("span");
       arrowSpan.className = "arrow";
-      arrowSpan.textContent = "▼";
+      arrowSpan.textContent = "+";
 
       titleDiv.appendChild(arrowSpan);
       unitDiv.appendChild(titleDiv);
