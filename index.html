@@ -456,16 +456,16 @@ lockButton.textContent = "🔒";
       if (i <= currentIndex) {
         // إلغاء القفل وإظهار صح فقط عند i < currentIndex
         if (i < currentIndex) {
-          l.lessonDiv.querySelector(".lockIcon").style.display = "flex";
+          l.lessonDiv.querySelector(".lockIcon").style.display = "none";
           l.lessonDiv.querySelector(".checkMark").textContent = "✔️";
         } else if (i === currentIndex) {
-          l.lessonDiv.querySelector(".lockIcon").style.display = "flex";
+          l.lessonDiv.querySelector(".lockIcon").style.display = "none";
           l.lessonDiv.querySelector(".checkMark").textContent = "";
         }
         l.lessonDiv.classList.remove("locked");
         l.lessonDiv.classList.add("unlocked");
       } else {
-        l.lessonDiv.querySelector(".lockIcon").style.display = "flex";
+        l.lessonDiv.querySelector(".lockIcon").style.display = "none";
         l.lessonDiv.querySelector(".checkMark").textContent = "";
         l.lessonDiv.classList.remove("unlocked");
         l.lessonDiv.classList.add("locked");
@@ -500,14 +500,14 @@ lockButton.textContent = "🔒";
         const currentLessonDiv = flatLessons[currentIndex].lessonDiv;
         const checkMark = currentLessonDiv.querySelector(".checkMark");
         if (checkMark) checkMark.textContent = "✔️";
-        currentLessonDiv.querySelector(".lockIcon").style.display = "flex";
+        currentLessonDiv.querySelector(".lockIcon").style.display = "none";
 
         // تفعيل الدرس التالي (فتح قفله)
         currentIndex++;
         const nextLessonDiv = flatLessons[currentIndex].lessonDiv;
         nextLessonDiv.classList.remove("locked");
         nextLessonDiv.classList.add("unlocked");
-        nextLessonDiv.querySelector(".lockIcon").style.display = "flex";
+        nextLessonDiv.querySelector(".lockIcon").style.display = "none";
 
         setActiveLesson(currentIndex);
       }
