@@ -211,11 +211,7 @@
 </head>
 <body>
 
-<header>دورة إثرائي: أساسيات التسويق</header>
-
-<div class="video-container">
-  <button id="bookmarkToggleBtn">الإشارات المرجعية</button>
-  <div id="bookmarkList"></div>
+<header>دورة : أساسيات التسويق</header>
 
   <iframe
     id="videoFrame"
@@ -224,7 +220,10 @@
     allowfullscreen
   ></iframe>
 </div>
-
+  
+<div class="video-container">
+  <button id="bookmarkToggleBtn">🔖</button>
+  <div id="bookmarkList"></div>
 <button id="nextLessonBtn">فتح كل الدروس</button>
 
 <div class="content">
@@ -302,9 +301,13 @@
 
   // إنشاء أيقونة القفل
   function createLockIcon() {
-  const lockButton = document.createElement("button");
-lockButton.textContent = "🔒";
-
+    const svgNS = "http://www.w3.org/2000/svg";
+    const icon = document.createElementNS(svgNS, "svg");
+    icon.setAttribute("viewBox", "0 0 24 24");
+    icon.setAttribute("class", "lockIcon");
+    icon.innerHTML = `<path d="M12 17a2 2 0 0 0 2-2v-2a2 2 0 1 0-4 0v2a2 2 0 0 0 2 2zm6-6h-1V7a5 5 0 0 0-10 0v4H6a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2z"/>`;
+    return icon;
+  }
 
   // إنشاء أيقونة الإشارة المرجعية
   function createBookmarkIcon() {
@@ -465,7 +468,7 @@ lockButton.textContent = "🔒";
         l.lessonDiv.classList.remove("locked");
         l.lessonDiv.classList.add("unlocked");
       } else {
-        l.lessonDiv.querySelector(".lockIcon").style.display = "none";
+        l.lessonDiv.querySelector(".lockIcon").style.display = "inline-block";
         l.lessonDiv.querySelector(".checkMark").textContent = "";
         l.lessonDiv.classList.remove("unlocked");
         l.lessonDiv.classList.add("locked");
