@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8" />
   <title>دورة إثرائي</title>
   <style>
@@ -68,7 +69,7 @@
     #bookmarkList {
       max-width: 450px;
       margin: 10px auto 20px;
-      text-align: right;
+      text-align: center;
       background: #dfe6e9;
       border-radius: 10px;
       padding: 10px 15px;
@@ -93,6 +94,8 @@
     }
 
     .content {
+      width: 90%;
+      margin: 0 auto;
       display: flex;
       justify-content: center;
       margin-top: 20px;
@@ -231,12 +234,45 @@
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
   // بيانات الوحدات والدروس
-  const lessonsData = [...Array(4).keys()].map(i => ({
-    title: `الوحدة ${i + 1}: عنوان الوحدة ${i + 1}`,
-    lessons: [...Array(12).keys()]
-      .map(j => `الدرس ${j + 1} من الوحدة ${i + 1}`)
-      .concat(`تقييم الوحدة ${i + 1}`)
-  }));
+  const lessonsData = [
+  {
+    title: "الوحدة 1: مقدمة في التسويق",
+    lessons: [
+      "الدرس 1: ما هو التسويق؟",
+      "الدرس 2: أهمية التسويق",
+      "الدرس 3: أنواع التسويق",
+      "الدرس 4: التسويق الرقمي",
+      "الدرس 5: سلوك المستهلك",
+      "الدرس 6: تحليل السوق",
+      "الدرس 7: التخطيط التسويقي",
+      "الدرس 8: الاستهداف والتجزئة",
+      "الدرس 9: المزيج التسويقي",
+      "الدرس 10: الترويج",
+      "الدرس 11: التوزيع",
+      "الدرس 12: التسعير",
+      "تقييم الوحدة 1"
+    ]
+  },
+  {
+    title: "الوحدة 2: التسويق الرقمي",
+    lessons: [
+      "الدرس 1: مفاهيم أساسية في التسويق الرقمي",
+      "الدرس 2: مواقع التواصل الاجتماعي",
+      "الدرس 3: تحسين محركات البحث (SEO)",
+      "الدرس 4: الإعلانات المدفوعة",
+      "الدرس 5: التسويق بالمحتوى",
+      "الدرس 6: التسويق بالبريد الإلكتروني",
+      "الدرس 7: التحليلات الرقمية",
+      "الدرس 8: تصميم الصفحات المقصودة",
+      "الدرس 9: تجربة المستخدم UX",
+      "الدرس 10: الحملات التسويقية",
+      "الدرس 11: أدوات التسويق الرقمي",
+      "الدرس 12: قياس الأداء",
+      "تقييم الوحدة 2"
+    ]
+  },
+  // يمكنك إضافة المزيد من الوحدات بنفس الطريقة
+];
 
   const videoLinks = [
     "https://www.youtube.com/embed/ScMzIvxBSi4?enablejsapi=1",
