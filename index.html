@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8" />
   <title>دورة إثرائي</title>
   <style>
@@ -55,25 +54,25 @@
     }
 
     #bookmarkToggleBtn {
-      background-color: #0984e3;
-      border: none;
+      background-color: #2d3436;
       color: white;
-      border-radius: 8px;
-      padding: 6px 12px;
-      margin: 4px 4px 4px 0;
+      border: none;
+      border-radius: 12px;
+      padding: 8px 16px;
+      font-size: 14px;
       cursor: pointer;
-      font-size: 13px;
-      transition: background-color 0.3s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      margin-bottom: 10px;
     }
 
     #bookmarkList {
       max-width: 450px;
       margin: 10px auto 20px;
-      text-align: center;
+      text-align: right;
       background: #dfe6e9;
       border-radius: 10px;
       padding: 10px 15px;
-      display: flex;
+      display: none;
       font-size: 14px;
       min-height: 30px;
     }
@@ -97,8 +96,6 @@
       display: flex;
       justify-content: center;
       margin-top: 20px;
-      width: 90%;
-      margin: 0 auto;
     }
 
     .sidebar {
@@ -129,25 +126,7 @@
     .arrow {
       font-size: 20px;
     }
-     .lesson-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  direction: rtl; /* لو عايز النص من اليمين لليسار */
-  margin: 10px 0;
-}
 
-.lesson-title .check {
-  color: green;
-  font-size: 18px;
-  min-width: 30px; /* عشان يثبت مكانه */
-}
-
-.lesson-title .text {
-  flex: 1;
-  margin-right: 10px;
-  font-size: 16px;
-}
     .lessons {
       display: none;
       padding: 10px 20px;
@@ -186,17 +165,17 @@
 
     .doneMark {
       color: green;
-      margin-right: 12px;
+      margin-left: 8px;
       user-select: none;
       font-weight: bold;
       min-width: 20px;
-      text-align: right;
+      text-align: center;
     }
 
     .bookmarkIcon {
       width: 18px;
       height: 18px;
-      margin-left: 30px;
+      margin-right: 10px;
       cursor: pointer;
       user-select: none;
       fill: #bbb;
@@ -219,26 +198,21 @@
     .checkMark {
       color: green;
       font-weight: bold;
-      margin-left: 30px;
+      margin-left: 10px;
       min-width: 20px;
-      text-align: left;
+      text-align: center;
       flex-shrink: 0;
     }
 
   </style>
 </head>
-  
 <body>
 
 <header>دورة إثرائي: أساسيات التسويق</header>
-<!-- تأكد من تضمين مكتبة Font Awesome -->
 
-
-<!-- الزر -->
-<button id="bookmarkBtn"><i class="fas fa-bookmark"></i></button>
 <div class="video-container">
-
-  <div id="bookmarkList">🔖</div>
+  <button id="bookmarkToggleBtn">الإشارات المرجعية</button>
+  <div id="bookmarkList"></div>
 
   <iframe
     id="videoFrame"
@@ -257,45 +231,12 @@
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
   // بيانات الوحدات والدروس
-  const lessonsData = [
-  {
-    title: "الوحدة 1: مقدمة في التسويق",
-    lessons: [
-      "الدرس 1: ما هو التسويق؟",
-      "الدرس 2: أهمية التسويق",
-      "الدرس 3: أنواع التسويق",
-      "الدرس 4: التسويق الرقمي",
-      "الدرس 5: سلوك المستهلك",
-      "الدرس 6: تحليل السوق",
-      "الدرس 7: التخطيط التسويقي",
-      "الدرس 8: الاستهداف والتجزئة",
-      "الدرس 9: المزيج التسويقي",
-      "الدرس 10: الترويج",
-      "الدرس 11: التوزيع",
-      "الدرس 12: التسعير",
-      "تقييم الوحدة 1"
-    ]
-  },
-  {
-    title: "الوحدة 2: التسويق الرقمي",
-    lessons: [
-      "الدرس 1: مفاهيم أساسية في التسويق الرقمي",
-      "الدرس 2: مواقع التواصل الاجتماعي",
-      "الدرس 3: تحسين محركات البحث (SEO)",
-      "الدرس 4: الإعلانات المدفوعة",
-      "الدرس 5: التسويق بالمحتوى",
-      "الدرس 6: التسويق بالبريد الإلكتروني",
-      "الدرس 7: التحليلات الرقمية",
-      "الدرس 8: تصميم الصفحات المقصودة",
-      "الدرس 9: تجربة المستخدم UX",
-      "الدرس 10: الحملات التسويقية",
-      "الدرس 11: أدوات التسويق الرقمي",
-      "الدرس 12: قياس الأداء",
-      "تقييم الوحدة 2"
-    ]
-  },
-  // يمكنك إضافة المزيد من الوحدات بنفس الطريقة
-];
+  const lessonsData = [...Array(4).keys()].map(i => ({
+    title: `الوحدة ${i + 1}: عنوان الوحدة ${i + 1}`,
+    lessons: [...Array(12).keys()]
+      .map(j => `الدرس ${j + 1} من الوحدة ${i + 1}`)
+      .concat(`تقييم الوحدة ${i + 1}`)
+  }));
 
   const videoLinks = [
     "https://www.youtube.com/embed/ScMzIvxBSi4?enablejsapi=1",
@@ -358,7 +299,7 @@
 
       const arrowSpan = document.createElement("span");
       arrowSpan.className = "arrow";
-      arrowSpan.textContent = "+";
+      arrowSpan.textContent = "▼";
 
       titleDiv.appendChild(arrowSpan);
       unitDiv.appendChild(titleDiv);
