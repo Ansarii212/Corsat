@@ -55,7 +55,7 @@
     }
 
     #bookmarkToggleBtn {
-      background-color: #2d3436;
+      background-color: white;
       color: white;
       border: none;
       border-radius: 12px;
@@ -213,18 +213,19 @@
 
 <header>English Grammar Course </header>
 
+<div class="video-container">
   <iframe
     id="videoFrame"
     src="https://www.youtube.com/embed/ScMzIvxBSi4?enablejsapi=1"
     allow="autoplay; encrypted-media"
     allowfullscreen
   ></iframe>
-</div>
-  
-<div class="video-container">
+
   <button id="bookmarkToggleBtn">🔖</button>
   <div id="bookmarkList"></div>
-<button id="nextLessonBtn">فتح كل الدروس</button>
+
+  <button id="nextLessonBtn">فتح كل الدروس</button>
+</div>
 
 <div class="content">
   <div class="sidebar" id="lessonList"></div>
@@ -290,262 +291,308 @@
     "https://www.youtube.com/embed/kJQP7kiw5Fk?enablejsapi=1",
     "https://www.youtube.com/embed/JGwWNGJdvx8?enablejsapi=1",
     "https://www.youtube.com/embed/3JZ_D3ELwOQ?enablejsapi=1",
-    "https://www.youtube.com/embed/YQHsXMglC9A?enablejsapi=1",
-    "https://www.youtube.com/embed/09R8_2nJtjg?enablejsapi=1"
+    "https://www.youtube.com/embed/LsoLEjrDogU?enablejsapi=1",
+    "https://www.youtube.com/embed/e-ORhEE9VVg?enablejsapi=1",
+    "https://www.youtube.com/embed/09R8_2nJtjg?enablejsapi=1",
+    "https://www.youtube.com/embed/OPf0YbXqDm0?enablejsapi=1",
+    "https://www.youtube.com/embed/uelHwf8o7_U?enablejsapi=1",
+    "https://www.youtube.com/embed/60ItHLz5WEA?enablejsapi=1",
+    "https://www.youtube.com/embed/fRh_vgS2dFE?enablejsapi=1",
+    "https://www.youtube.com/embed/kJQP7kiw5Fk?enablejsapi=1",
+    "https://www.youtube.com/embed/3JZ_D3ELwOQ?enablejsapi=1",
+    "https://www.youtube.com/embed/2Vv-BfVoq4g?enablejsapi=1",
+    "https://www.youtube.com/embed/e-ORhEE9VVg?enablejsapi=1",
+    "https://www.youtube.com/embed/OPf0YbXqDm0?enablejsapi=1",
+    "https://www.youtube.com/embed/uelHwf8o7_U?enablejsapi=1",
+    "https://www.youtube.com/embed/ScMzIvxBSi4?enablejsapi=1",
+    "https://www.youtube.com/embed/aqz-KE-bpKQ?enablejsapi=1",
+    "https://www.youtube.com/embed/60ItHLz5WEA?enablejsapi=1",
+    "https://www.youtube.com/embed/fRh_vgS2dFE?enablejsapi=1",
+    "https://www.youtube.com/embed/kJQP7kiw5Fk?enablejsapi=1",
+    "https://www.youtube.com/embed/09R8_2nJtjg?enablejsapi=1",
+    "https://www.youtube.com/embed/OPf0YbXqDm0?enablejsapi=1",
+    "https://www.youtube.com/embed/uelHwf8o7_U?enablejsapi=1",
+    "https://www.youtube.com/embed/LsoLEjrDogU?enablejsapi=1",
+    "https://www.youtube.com/embed/3JZ_D3ELwOQ?enablejsapi=1",
+    "https://www.youtube.com/embed/2Vv-BfVoq4g?enablejsapi=1",
+    "https://www.youtube.com/embed/e-ORhEE9VVg?enablejsapi=1",
+    "https://www.youtube.com/embed/fRh_vgS2dFE?enablejsapi=1",
+    "https://www.youtube.com/embed/60ItHLz5WEA?enablejsapi=1",
+    "https://www.youtube.com/embed/ScMzIvxBSi4?enablejsapi=1",
+    "https://www.youtube.com/embed/aqz-KE-bpKQ?enablejsapi=1",
+    "https://www.youtube.com/embed/60ItHLz5WEA?enablejsapi=1",
+    "https://www.youtube.com/embed/kJQP7kiw5Fk?enablejsapi=1",
+    "https://www.youtube.com/embed/09R8_2nJtjg?enablejsapi=1",
+    "https://www.youtube.com/embed/OPf0YbXqDm0?enablejsapi=1",
+    "https://www.youtube.com/embed/uelHwf8o7_U?enablejsapi=1",
+    "https://www.youtube.com/embed/LsoLEjrDogU?enablejsapi=1",
+    "https://www.youtube.com/embed/3JZ_D3ELwOQ?enablejsapi=1",
+    "https://www.youtube.com/embed/2Vv-BfVoq4g?enablejsapi=1",
+    "https://www.youtube.com/embed/e-ORhEE9VVg?enablejsapi=1",
+    "https://www.youtube.com/embed/fRh_vgS2dFE?enablejsapi=1",
+    "https://www.youtube.com/embed/60ItHLz5WEA?enablejsapi=1",
   ];
-  while (videoLinks.length < 52) {
-    videoLinks.push(videoLinks[videoLinks.length % 10]);
-  }
 
-  let flatLessons = [];
-  let currentIndex = 0;
-  const lessonList = document.getElementById("lessonList");
+  // مدة افتراضية للدروس بالترتيب (يمكن تعديلها حسب كل فيديو)
+  const lessonsDuration = [
+    "4:22", "6:15", "5:01", "3:45", "7:30",
+    "6:00", "5:40", "4:50", "3:55", "7:10",
+    "5:30", "6:20", "5:00", "4:45", "6:00",
+    "5:10", "5:45", "4:30", "5:15", "6:25",
+    "7:00", "6:50", "5:55", "4:40", "6:35",
+    "5:05", "6:45", "5:25", "4:55", "6:10",
+    "7:20", "5:35", "6:15", "5:45", "6:05",
+    "7:00", "5:50", "6:40", "5:30", "6:20",
+    "5:00", "6:10", "5:25", "4:55", "6:15",
+    "7:05", "6:35", "5:45", "6:25", "5:50",
+    "7:10", "6:45"
+  ];
+
+  const lessonListDiv = document.getElementById("lessonList");
+  const videoFrame = document.getElementById("videoFrame");
   const nextLessonBtn = document.getElementById("nextLessonBtn");
   const bookmarkToggleBtn = document.getElementById("bookmarkToggleBtn");
   const bookmarkList = document.getElementById("bookmarkList");
-  const videoFrame = document.getElementById("videoFrame");
 
-  let bookmarks = [];
+  // Flatten all lessons with indexes and durations for easy navigation
+  const flatLessons = [];
+  lessonsData.forEach(unit => {
+    unit.lessons.forEach(lessonName => {
+      flatLessons.push({name: lessonName});
+    });
+  });
 
-  // إنشاء أيقونة القفل
-  function createLockIcon() {
-    const svgNS = "http://www.w3.org/2000/svg";
-    const icon = document.createElementNS(svgNS, "svg");
-    icon.setAttribute("viewBox", "0 0 24 24");
-    icon.setAttribute("class", "lockIcon");
-    icon.innerHTML = `<path d="M12 17a2 2 0 0 0 2-2v-2a2 2 0 1 0-4 0v2a2 2 0 0 0 2 2zm6-6h-1V7a5 5 0 0 0-10 0v4H6a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2z"/>`;
-    return icon;
+  // Add duration info to flatLessons
+  flatLessons.forEach((lesson, i) => {
+    lesson.duration = lessonsDuration[i] || "N/A";
+  });
+
+  let currentIndex = 0;
+  let bookmarks = new Set();
+
+  // حفظ واستعادة علامات التفضيل من localStorage
+  function saveBookmarks() {
+    localStorage.setItem('lessonBookmarks', JSON.stringify(Array.from(bookmarks)));
+  }
+  function loadBookmarks() {
+    const saved = localStorage.getItem('lessonBookmarks');
+    if (saved) {
+      bookmarks = new Set(JSON.parse(saved));
+    }
   }
 
-  // إنشاء أيقونة الإشارة المرجعية
-  function createBookmarkIcon() {
-    const svgNS = "http://www.w3.org/2000/svg";
-    const icon = document.createElementNS(svgNS, "svg");
-    icon.setAttribute("viewBox", "0 0 24 24");
-    icon.setAttribute("class", "bookmarkIcon");
-    icon.innerHTML = `<path d="M6 4v16l6-6 6 6V4z"/>`;
-    return icon;
-  }
+  loadBookmarks();
 
-  // إنشاء الدروس بالاقفال والإشارات
+  // إنشاء قائمة الدروس
   function createLessons() {
-    lessonList.innerHTML = "";
-    flatLessons = [];
-    lessonsData.forEach((unit, uIndex) => {
+    lessonListDiv.innerHTML = "";
+    let lessonCount = 0;
+
+    lessonsData.forEach((unit, unitIndex) => {
       const unitDiv = document.createElement("div");
-      unitDiv.className = "unit";
+      unitDiv.classList.add("unit");
 
-      // عنوان الوحدة مع سهم الطي
-      const titleDiv = document.createElement("div");
-      titleDiv.className = "unit-title";
-      titleDiv.textContent = unit.title;
+      const unitTitle = document.createElement("div");
+      unitTitle.classList.add("unit-title");
+      unitTitle.textContent = unit.title;
 
+      // زر السهم (فتح/قفل)
       const arrowSpan = document.createElement("span");
-      arrowSpan.className = "arrow";
-      arrowSpan.textContent = "▼";
+      arrowSpan.classList.add("arrow");
+      arrowSpan.textContent = "+";
+      unitTitle.appendChild(arrowSpan);
 
-      titleDiv.appendChild(arrowSpan);
-      unitDiv.appendChild(titleDiv);
+      unitDiv.appendChild(unitTitle);
 
       const lessonsDiv = document.createElement("div");
-      lessonsDiv.className = "lessons";
+      lessonsDiv.classList.add("lessons");
 
-      // طي وفتح الوحدة
-      titleDiv.onclick = () => {
-        if (lessonsDiv.style.display === "block") {
-          lessonsDiv.style.display = "none";
-          arrowSpan.textContent = "▼";
-        } else {
-          lessonsDiv.style.display = "block";
-          arrowSpan.textContent = "▲";
-        }
-      };
-
-      unit.lessons.forEach((lessonName, lIndex) => {
+      unit.lessons.forEach((lessonName, lessonIndex) => {
         const lessonDiv = document.createElement("div");
-        lessonDiv.className = "lesson locked";
+        lessonDiv.classList.add("lesson");
 
-        lessonDiv.dataset.index = flatLessons.length;
-        lessonDiv.textContent = lessonName;
+        // أضف اسم الدرس مع المدة بجانبه
+        lessonDiv.textContent = `${lessonName} (${lessonsDuration[lessonCount] || "N/A"})`;
 
-        // أيقونة القفل أو علامة الصح حسب الحالة
-        const lockIcon = createLockIcon();
-        lessonDiv.insertBefore(lockIcon, lessonDiv.firstChild);
+        // وضع علامات قفل/فتح الدروس حسب التسلسل
+        if (lessonCount === 0) {
+          lessonDiv.classList.add("unlocked");
+        } else {
+          // نفتح الدرس إذا الدرس السابق تم تعليمه
+          const prevLesson = flatLessons[lessonCount - 1];
+          if (prevLesson.done) {
+            lessonDiv.classList.add("unlocked");
+          } else {
+            lessonDiv.classList.add("locked");
+          }
+        }
+
+        // وضع علامة صح إذا تم الانتهاء
+        if (flatLessons[lessonCount].done) {
+          const doneSpan = document.createElement("span");
+          doneSpan.classList.add("doneMark");
+          doneSpan.textContent = "✔";
+          lessonDiv.appendChild(doneSpan);
+        }
 
         // أيقونة الإشارة المرجعية
-        const bookmarkIcon = createBookmarkIcon();
-        bookmarkIcon.title = "وضع/حذف إشارة مرجعية";
-        lessonDiv.insertBefore(bookmarkIcon, lessonDiv.firstChild);
+        const bookmarkIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        bookmarkIcon.setAttribute("class", "bookmarkIcon");
+        bookmarkIcon.setAttribute("viewBox", "0 0 24 24");
+        bookmarkIcon.setAttribute("fill", "none");
+        bookmarkIcon.setAttribute("stroke", "currentColor");
+        bookmarkIcon.setAttribute("stroke-width", "2");
+        bookmarkIcon.setAttribute("stroke-linecap", "round");
+        bookmarkIcon.setAttribute("stroke-linejoin", "round");
+        bookmarkIcon.innerHTML = `<path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>`;
+        if (bookmarks.has(lessonCount)) {
+          bookmarkIcon.classList.add("active");
+        }
+        lessonDiv.prepend(bookmarkIcon);
 
-        // عند الضغط على الإشارة المرجعية toggle
-        bookmarkIcon.onclick = (e) => {
+        // حدث النقر على علامة المرجعية
+        bookmarkIcon.addEventListener("click", e => {
           e.stopPropagation();
-          const idx = +lessonDiv.dataset.index;
-          if (bookmarks.includes(idx)) {
-            bookmarks = bookmarks.filter(x => x !== idx);
+          if (bookmarks.has(lessonCount)) {
+            bookmarks.delete(lessonCount);
             bookmarkIcon.classList.remove("active");
           } else {
-            bookmarks.push(idx);
+            bookmarks.add(lessonCount);
             bookmarkIcon.classList.add("active");
           }
-          renderBookmarkList();
           saveBookmarks();
-        };
+          renderBookmarks();
+        });
+
+        // حدث النقر على الدرس (إذا مفتوح)
+        lessonDiv.addEventListener("click", () => {
+          if (lessonDiv.classList.contains("locked")) return;
+          currentIndex = lessonCount;
+          playLesson(currentIndex);
+        });
 
         lessonsDiv.appendChild(lessonDiv);
-        flatLessons.push({ unitIndex: uIndex, lessonIndex: lIndex, lessonDiv });
+        lessonCount++;
+      });
+
+      // إخفاء الدروس داخل الوحدة بشكل افتراضي
+      lessonsDiv.style.display = "none";
+
+      // حدث النقر على عنوان الوحدة لفتح/غلق الدروس
+      unitTitle.addEventListener("click", () => {
+        if (lessonsDiv.style.display === "none") {
+          lessonsDiv.style.display = "block";
+          arrowSpan.textContent = "-";
+        } else {
+          lessonsDiv.style.display = "none";
+          arrowSpan.textContent = "+";
+        }
       });
 
       unitDiv.appendChild(lessonsDiv);
-      lessonList.appendChild(unitDiv);
+      lessonListDiv.appendChild(unitDiv);
     });
   }
 
-  // حفظ واسترجاع الإشارات المرجعية من localStorage
-  function saveBookmarks() {
-    localStorage.setItem("lessonBookmarks", JSON.stringify(bookmarks));
-  }
-
-  function loadBookmarks() {
-    const saved = localStorage.getItem("lessonBookmarks");
-    if (saved) {
-      bookmarks = JSON.parse(saved);
-    } else {
-      bookmarks = [];
-    }
-  }
-
-  // عرض قائمة الإشارات المرجعية كأزرار
-  function renderBookmarkList() {
+  // عرض الدروس المحفوظة في علامة المرجعية
+  function renderBookmarks() {
     bookmarkList.innerHTML = "";
-    if (bookmarks.length === 0) {
-      bookmarkList.textContent = "لا توجد إشارات مرجعية بعد.";
+    if (bookmarks.size === 0) {
+      bookmarkList.textContent = "No bookmarks added.";
       return;
     }
     bookmarks.forEach(idx => {
-      const btn = document.createElement("button");
       const lesson = flatLessons[idx];
-      btn.textContent = `${lessonsData[lesson.unitIndex].lessons[lesson.lessonIndex]}`;
-      btn.onclick = () => {
-        loadLesson(idx);
-      };
-      bookmarkList.appendChild(btn);
+      if (!lesson) return;
+      const item = document.createElement("div");
+      item.classList.add("bookmarkItem");
+      item.textContent = lesson.name + ` (${lesson.duration || "N/A"})`;
+      item.addEventListener("click", () => {
+        currentIndex = idx;
+        playLesson(currentIndex);
+      });
+      bookmarkList.appendChild(item);
     });
   }
 
-  // تفعيل عرض/اخفاء قائمة الإشارات
-  bookmarkToggleBtn.onclick = () => {
-    if (bookmarkList.style.display === "block") {
-      bookmarkList.style.display = "none";
-    } else {
-      bookmarkList.style.display = "block";
+  // تشغيل درس محدد
+  function playLesson(index) {
+    const lesson = flatLessons[index];
+    if (!lesson) return;
+
+    // علامة الدرس كمكتمل
+    lesson.done = true;
+
+    // تحديث فتح الدرس التالي
+    if (flatLessons[index + 1]) {
+      flatLessons[index + 1].done = true;
     }
-  };
 
-  // تحميل درس معين
-  function loadLesson(idx) {
-    // إذا الدرس مقفل (ما بعد currentIndex + 1) ممنوع
-    if (idx > currentIndex) return;
-    setActiveLesson(idx);
+    updateLessonsUI();
+
+    // تحميل الفيديو في الإطار
+    videoFrame.src = lessonVideos[index];
+
+    // تشغيل الفيديو تلقائياً
+    // (يمكن استخدام YouTube Player API إذا لزم الأمر)
+
+    // تفعيل زر التالي
+    nextLessonBtn.disabled = (index === flatLessons.length - 1);
   }
 
-  // تفعيل درس معين وتحديث الفيديو
-  function setActiveLesson(idx) {
-    flatLessons.forEach(l => {
-      l.lessonDiv.classList.remove("active");
-    });
-    flatLessons[idx].lessonDiv.classList.add("active");
-    // تفعيل القفل والصح
-    flatLessons.forEach((l, i) => {
-      const lockIcon = l.lessonDiv.querySelector(".lockIcon");
-      const checkMark = l.lessonDiv.querySelector(".checkMark");
-      if (!checkMark) {
-        const span = document.createElement("span");
-        span.className = "checkMark";
-        l.lessonDiv.appendChild(span);
-      }
-      if (i <= currentIndex) {
-        // إلغاء القفل وإظهار صح فقط عند i < currentIndex
-        if (i < currentIndex) {
-          l.lessonDiv.querySelector(".lockIcon").style.display = "none";
-          l.lessonDiv.querySelector(".checkMark").textContent = "✔️";
-        } else if (i === currentIndex) {
-          l.lessonDiv.querySelector(".lockIcon").style.display = "none";
-          l.lessonDiv.querySelector(".checkMark").textContent = "";
-        }
-        l.lessonDiv.classList.remove("locked");
-        l.lessonDiv.classList.add("unlocked");
+  // تحديث حالة الدروس في القائمة (فتح/غلق/علامة صح)
+  function updateLessonsUI() {
+    const lessonDivs = lessonListDiv.querySelectorAll(".lesson");
+    lessonDivs.forEach((lessonDiv, i) => {
+      lessonDiv.classList.remove("locked", "unlocked");
+      lessonDiv.querySelector(".doneMark")?.remove();
+
+      if (flatLessons[i].done) {
+        lessonDiv.classList.add("unlocked");
+        const doneSpan = document.createElement("span");
+        doneSpan.classList.add("doneMark");
+        doneSpan.textContent = "✔";
+        lessonDiv.appendChild(doneSpan);
+      } else if (i === 0 || (flatLessons[i - 1] && flatLessons[i - 1].done)) {
+        lessonDiv.classList.add("unlocked");
       } else {
-        l.lessonDiv.querySelector(".lockIcon").style.display = "inline-block";
-        l.lessonDiv.querySelector(".checkMark").textContent = "";
-        l.lessonDiv.classList.remove("unlocked");
-        l.lessonDiv.classList.add("locked");
+        lessonDiv.classList.add("locked");
       }
-    });
-    // تغيير رابط الفيديو
-    const videoURL = videoLinks[idx] || videoLinks[0];
-    player.loadVideoByUrl(videoURL);
-  }
 
-  // عند الضغط زر فتح الدروس كلها - فقط يفعل الدرس الأول
-  nextLessonBtn.onclick = () => {
-    currentIndex = 0;
-    setActiveLesson(0);
-  };
-
-  // YouTube Player API
-  let player;
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('videoFrame', {
-      events: {
-        'onStateChange': onPlayerStateChange
+      // تحديث علامة المرجعية حسب الحالة
+      const bookmarkIcon = lessonDiv.querySelector(".bookmarkIcon");
+      if (bookmarks.has(i)) {
+        bookmarkIcon.classList.add("active");
+      } else {
+        bookmarkIcon.classList.remove("active");
       }
     });
   }
 
-  // عند انتهاء الفيديو - نفعّل الدرس التالي
-  function onPlayerStateChange(event) {
-    if (event.data === YT.PlayerState.ENDED) {
-      if (currentIndex < flatLessons.length - 1) {
-        // وضع علامة صح على الدرس الحالي
-        const currentLessonDiv = flatLessons[currentIndex].lessonDiv;
-        const checkMark = currentLessonDiv.querySelector(".checkMark");
-        if (checkMark) checkMark.textContent = "✔️";
-        currentLessonDiv.querySelector(".lockIcon").style.display = "none";
-
-        // تفعيل الدرس التالي (فتح قفله)
-        currentIndex++;
-        const nextLessonDiv = flatLessons[currentIndex].lessonDiv;
-        nextLessonDiv.classList.remove("locked");
-        nextLessonDiv.classList.add("unlocked");
-        nextLessonDiv.querySelector(".lockIcon").style.display = "none";
-
-        setActiveLesson(currentIndex);
-      }
-    }
-  }
-
-  // تحميل الإشارات المرجعية
-  loadBookmarks();
-
-  // إنشاء الدروس وتهيئة الواجهة
-  createLessons();
-
-  // تطبيق الإشارات المرجعية
-  bookmarks.forEach(idx => {
-    if (flatLessons[idx]) {
-      flatLessons[idx].lessonDiv.querySelector(".bookmarkIcon").classList.add("active");
+  // زر الدرس التالي
+  nextLessonBtn.addEventListener("click", () => {
+    if (currentIndex < flatLessons.length - 1) {
+      currentIndex++;
+      playLesson(currentIndex);
     }
   });
 
-  // عرض الإشارات
-  renderBookmarkList();
+  // زر تبديل عرض علامات المرجعية
+  bookmarkToggleBtn.addEventListener("click", () => {
+    if (bookmarkList.style.display === "none" || bookmarkList.style.display === "") {
+      bookmarkList.style.display = "block";
+      bookmarkToggleBtn.textContent = "Hide Bookmarks";
+    } else {
+      bookmarkList.style.display = "none";
+      bookmarkToggleBtn.textContent = "Show Bookmarks";
+    }
+  });
 
-  // تفعيل الدرس الأول (مفتوح فقط)
-  currentIndex = 0;
-  setActiveLesson(0);
+  // بدء التشغيل عند تحميل الصفحة
+  createLessons();
+  renderBookmarks();
+  playLesson(currentIndex);
 
 </script>
-
 </body>
 </html>
